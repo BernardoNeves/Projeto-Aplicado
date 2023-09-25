@@ -32,6 +32,8 @@ public class EnemyController : MonoBehaviour
     //Player
     private Transform _playerTransform;
 
+    public bool playerWasAttacked = false; 
+
     //Start to Initialize Variables
     void Start()
     {
@@ -104,7 +106,12 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            UnityEngine.Debug.Log("You Recieved: " + enemyDamage);
+            ApplyDamage(collision.gameObject.GetComponent<IDamageable>());
         }
+    }
+
+    protected void ApplyDamage(IDamageable damageable)
+    {
+        damageable.Damage(enemyDamage);
     }
 }

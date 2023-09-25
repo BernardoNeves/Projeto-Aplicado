@@ -8,10 +8,9 @@ public class TimeManager : Progressive, IDamageable, IHealable, ITimeable
 {
     [SerializeField] private bool isTimeCoroutineRunning = false;
 
-
     private void Start()
     {
-        StartTimeCoroutine();
+        //StartTimeCoroutine();
     }
 
     private bool CheckMaxValue()
@@ -43,7 +42,6 @@ public class TimeManager : Progressive, IDamageable, IHealable, ITimeable
         yield return new WaitForSeconds(0);
         StartCoroutine(TimeCoroutine());
     }
-
     public void Damage(float damageAmount)
     {
         if (damageAmount > Value)

@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour
 {
-	public float dmgValue = 4;
+	private float dmgValue;
+	private float knockbackValue;
+	private Vector2 knockbackDirection;
 	public GameObject throwableObject;
 	public Transform attackCheck;
 	private Rigidbody2D m_Rigidbody2D;
@@ -35,6 +37,8 @@ public class Attack : MonoBehaviour
     {
 		if (Input.GetKeyDown(KeyCode.Mouse0) && canAttack && !isAttacking)
 		{
+			knockbackValue = pointer.lightKnockback;
+			dmgValue = pointer.lightDamage;
 			isAttacking = true;
 			canAttack = false;
 			animator.SetFloat("AttackSpeed", pointer.lightAttackSpeed);
@@ -44,19 +48,15 @@ public class Attack : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.Mouse1) && canAttack && !isAttacking)
 		{
-			/*
-			GameObject throwableWeapon = Instantiate(throwableObject, transform.position + new Vector3(transform.localScale.x * 0.5f,-0.2f), Quaternion.identity) as GameObject; 
-			Vector2 direction = new Vector2(transform.localScale.x, 0);
-			throwableWeapon.GetComponent<ThrowableWeapon>().direction = direction; 
-			throwableWeapon.name = "ThrowableWeapon";
-			*/
+			knockbackValue = pointer.heavyKnockback;
+			dmgValue = pointer.heavyDamage;
 			isAttacking = true;
 			canAttack = false;
 			animator.SetFloat("AttackSpeed", pointer.heavyAttackSpeed);
 			animator.SetBool("IsAttacking", true);
 			StartCoroutine(HeavyAttackCooldown());
-
 		}
+
 	}
 
 	IEnumerator LightAttackCooldown()
@@ -75,18 +75,31 @@ public class Attack : MonoBehaviour
 	public void DoDashDamage()
 	{
 		dmgValue = Mathf.Abs(dmgValue);
-		Collider2D[] collidersEnemies = Physics2D.OverlapCircleAll(attackCheck.position, 0.9f);
+		Collider2D[] collidersEnemies = Physics2D.OverlapCircleAll(attackCheck.position, pointer.range);
 		for (int i = 0; i < collidersEnemies.Length; i++)
 		{
 			if (collidersEnemies[i].gameObject.tag == "Enemy")
 			{
+				/*
 				if (collidersEnemies[i].transform.position.x - transform.position.x < 0)
 				{
 					dmgValue = -dmgValue;
 				}
 				collidersEnemies[i].gameObject.SendMessage("ApplyDamage", dmgValue);
 				cam.GetComponent<CameraFollow>().ShakeCamera();
+				*/
+
+				ApplyDamage(collidersEnemies[i].gameObject.GetComponent<IDamageable>(), dmgValue);
+
+				knockbackDirection = transform.position - collidersEnemies[i].transform.position;
+
+				m_Rigidbody2D.AddForce(knockbackDirection, ForceMode2D.Impulse);
 			}
 		}
+	}
+
+	protected void ApplyDamage(IDamageable damageable, float dmgAmount)
+	{
+		damageable.Damage(dmgAmount);
 	}
 }
