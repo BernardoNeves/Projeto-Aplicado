@@ -91,9 +91,9 @@ public class Attack : MonoBehaviour
 
 				ApplyDamage(collidersEnemies[i].gameObject.GetComponent<IDamageable>(), dmgValue);
 
-				knockbackDirection = transform.position - collidersEnemies[i].transform.position;
+				knockbackDirection = collidersEnemies[i].transform.position - transform.position;
 
-				m_Rigidbody2D.AddForce(knockbackDirection, ForceMode2D.Impulse);
+				collidersEnemies[i].GetComponent<Rigidbody2D>().AddForce(knockbackDirection * knockbackValue, ForceMode2D.Impulse);
 			}
 		}
 	}

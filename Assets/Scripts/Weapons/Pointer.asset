@@ -15,6 +15,10 @@ MonoBehaviour:
   name: Pointer
   lightDamage: 3
   lightCooldown: 0.5
+  lightAttackSpeed: 0.5
+  lightKnockback: 5
   heavyDamage: 8
   heavyCooldown: 1
-  range: 3
+  heavyAttackSpeed: 0.25
+  heavyKnockback: 2
+  range: 0.9
