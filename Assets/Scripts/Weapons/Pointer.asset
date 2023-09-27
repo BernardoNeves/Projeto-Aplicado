@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Pointer
   m_EditorClassIdentifier: 
   name: Pointer
-  lightDamage: 3
+  lightDamage: 10
   lightCooldown: 0.5
   lightAttackSpeed: 0.5
-  lightKnockback: 5
+  lightKnockback: 6
   heavyDamage: 8
   heavyCooldown: 1
   heavyAttackSpeed: 0.25
-  heavyKnockback: 2
-  range: 0.9
+  heavyKnockback: 10
+  range: 2
