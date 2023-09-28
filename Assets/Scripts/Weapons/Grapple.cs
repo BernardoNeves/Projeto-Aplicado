@@ -8,8 +8,12 @@ public class Grapple : MonoBehaviour
     public GameObject grappleOriginLnR;
     public GameObject grappleOriginUp;
 
+    private bool isGrappling = false;
     private Vector2 grappleDirection;
     private GameObject grappleOrigin;
+    private Vector2 grapplePoint;
+    private float objectWidth;
+
     public float grappleRange = 10f;
     public float grappleSpeed = 5f;
 
@@ -49,7 +53,21 @@ public class Grapple : MonoBehaviour
     {
         if ((hit.collider.gameObject.tag == "Wall" || hit.collider.gameObject.tag == "Enemy") && Input.GetKey(KeyCode.Q))
         {
-            Vector2 targetPosition = hit.collider.gameObject.transform.position;
+            Renderer objectRenderer = hit.collider.gameObject.GetComponent<Renderer>();
+            if (objectRenderer != null)
+            {
+                // Get the width (x-axis size) of the object
+                objectWidth = objectRenderer.bounds.size.x;
+                Debug.Log("Width of the hit object: " + objectWidth);
+            }
+            else
+            {
+                Debug.LogWarning("Renderer component not found on the hit object.");
+            }
+
+            objectWidth = objectWidth * grappleDirection.x;
+
+            Vector2 targetPosition = new Vector2 (hit.collider.gameObject.transform.position.x + objectWidth, hit.collider.gameObject.transform.position.y);
 
             Vector2 currentPosition = transform.position;
 
@@ -57,6 +75,30 @@ public class Grapple : MonoBehaviour
             float step = grappleSpeed * Time.deltaTime;
 
             transform.position = Vector2.Lerp(currentPosition, targetPosition, Mathf.Clamp01(step / distanceToTarget));
+
+            isGrappling = true;
+            grapplePoint = hit.point;
+
+
+        }
+
+        if (isGrappling)
+        {
+            Vector2 targetPosition = grapplePoint;
+            Vector2 currentPosition = transform.position;
+            float distanceToTarget = Vector2.Distance(currentPosition, targetPosition);
+
+            if (Input.GetKey(KeyCode.Q))
+            {
+                // Continue to stick to the wall
+                float step = grappleSpeed * Time.deltaTime;
+                transform.position = Vector2.Lerp(currentPosition, targetPosition, Mathf.Clamp01(step / distanceToTarget));
+            }
+            else
+            {
+                // Release the grapple
+                isGrappling = false;
+            }
         }
     }
 }
