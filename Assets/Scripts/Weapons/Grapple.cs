@@ -8,11 +8,13 @@ public class Grapple : MonoBehaviour
     public GameObject grappleOriginLnR;
     public GameObject grappleOriginUp;
 
-    private bool isGrappling = false;
-    private Vector2 grappleDirection;
     private GameObject grappleOrigin;
-    private Vector2 grapplePoint;
-    private float objectWidth;
+    private Vector2 grappleDirection;
+    private Vector2 targetPosition;
+    private Vector2 targetWidthOrHeight;
+    private float grappleDirectionCheck;
+    //private Vector2 grapplePoint;
+    //private bool isGrappling = false;
 
     public float grappleRange = 10f;
     public float grappleSpeed = 5f;
@@ -32,7 +34,14 @@ public class Grapple : MonoBehaviour
             // Draw the ray as a debug line
             Debug.DrawRay(grappleOrigin.transform.position, grappleDirection * grappleRange, Color.green);
 
-            GrappelPull(hitUp);
+            if ((hitUp.collider.gameObject.tag == "Wall" || hitUp.collider.gameObject.tag == "Enemy")
+            && Input.GetKey(KeyCode.Q))
+            {
+                //grappleDirectionCheck = GetGrappleDirectionCheck(targetPosition, transform.position);
+                targetWidthOrHeight = GetTargetWidthOrHeight(hitUp.collider.gameObject, 0);
+                targetPosition = GetTargetPosition(transform.position.x, hitUp.collider.gameObject.transform.position.y, targetWidthOrHeight);
+                GrapplePull(transform.position, targetPosition);
+            }
         }
         else 
         {
@@ -45,42 +54,89 @@ public class Grapple : MonoBehaviour
             // Draw the ray as a debug line
             Debug.DrawRay(grappleOrigin.transform.position, grappleDirection * grappleRange, Color.green);
 
-            GrappelPull(hit);
+            if ((hit.collider.gameObject.tag == "Wall" || hit.collider.gameObject.tag == "Enemy")
+            && Input.GetKey(KeyCode.Q))
+            {
+                grappleDirectionCheck = GetGrappleDirectionCheck(targetPosition, transform.position);
+                targetWidthOrHeight = GetTargetWidthOrHeight(hit.collider.gameObject, grappleDirectionCheck);
+                targetPosition = GetTargetPosition(hit.collider.gameObject.transform.position.x, transform.position.y, targetWidthOrHeight);
+                GrapplePull(transform.position, targetPosition);
+            }
+        }
+        
+    }
+    public void GetGrappleTarget(RaycastHit2D hit) 
+    {
+        if ((hit.collider.gameObject.tag == "Wall" || hit.collider.gameObject.tag == "Enemy")
+            && Input.GetKey(KeyCode.Q))
+        {
+            grappleDirectionCheck = GetGrappleDirectionCheck(targetPosition, transform.position);
+            targetWidthOrHeight = GetTargetWidthOrHeight(hit.collider.gameObject, grappleDirectionCheck);
+            targetPosition = GetTargetPosition(hit.collider.gameObject.transform.position.x, transform.position.y, targetWidthOrHeight);
+            GrapplePull(transform.position, targetPosition);
         }
     }
 
-    public void GrappelPull(RaycastHit2D hit) 
+    public Vector2 GetTargetPosition(float xTarget, float yTarget,Vector2 widthOrHeight)
     {
-        if ((hit.collider.gameObject.tag == "Wall" || hit.collider.gameObject.tag == "Enemy") && Input.GetKey(KeyCode.Q))
+        Vector2 position = new Vector2(xTarget + widthOrHeight.x, yTarget + widthOrHeight.y);
+        return position;
+    }
+
+    public Vector2 GetTargetWidthOrHeight(GameObject target, float playerDirection) 
+    {
+        Renderer objectRenderer = target.GetComponent<Renderer>();
+        if (objectRenderer != null)
         {
-            Renderer objectRenderer = hit.collider.gameObject.GetComponent<Renderer>();
-            if (objectRenderer != null)
+            if (playerDirection !=0)
             {
                 // Get the width (x-axis size) of the object
-                objectWidth = objectRenderer.bounds.size.x;
-                Debug.Log("Width of the hit object: " + objectWidth);
+                float objectWidth = objectRenderer.bounds.size.x;
+
+                if (grappleDirectionCheck > 0)
+                {
+                    objectWidth = -objectWidth;
+                }
+
+                return new Vector2(objectWidth, 0);
             }
             else
             {
-                Debug.LogWarning("Renderer component not found on the hit object.");
+                float objectHeight = objectRenderer.bounds.size.y;
+                objectHeight = -objectHeight;
+                return new Vector2(0, objectHeight);
             }
+        }
+        else
+        {
+            Debug.LogWarning("Renderer component not found on the hit object.");
+            return new Vector2(0,0);
+        }
+    }
 
-            objectWidth = objectWidth * grappleDirection.x;
+    public float GetGrappleDirectionCheck(Vector2 target, Vector2 currentPosition) 
+    {
+        float directionCheck = targetPosition.x - currentPosition.x;
+        return directionCheck;
+    }
 
-            Vector2 targetPosition = new Vector2 (hit.collider.gameObject.transform.position.x + objectWidth, hit.collider.gameObject.transform.position.y);
-
-            Vector2 currentPosition = transform.position;
-
-            float distanceToTarget = Vector2.Distance(currentPosition, targetPosition);
-            float step = grappleSpeed * Time.deltaTime;
-
-            transform.position = Vector2.Lerp(currentPosition, targetPosition, Mathf.Clamp01(step / distanceToTarget));
-
-            isGrappling = true;
-            grapplePoint = hit.point;
-
+    public void GrapplePull(Vector2 cPosition, Vector2 tPosition) 
+    {
+        if (cPosition == null || tPosition == null)
+        {
 
         }
+        else
+        {
+            float distanceToTarget = Vector2.Distance(cPosition, tPosition);
+            float step = grappleSpeed * Time.deltaTime;
+
+            transform.position = Vector2.Lerp(cPosition, tPosition, Mathf.Clamp01(step / distanceToTarget));
+        }
+
+        /*
+        isGrappling = true;
+        grapplePoint = hit.point;
 
         if (isGrappling)
         {
@@ -100,5 +156,6 @@ public class Grapple : MonoBehaviour
                 isGrappling = false;
             }
         }
+        */
     }
 }
