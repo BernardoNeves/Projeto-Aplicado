@@ -7,7 +7,9 @@ public class Grapple : MonoBehaviour
     //public GameObject player;
     public GameObject grappleOriginLnR;
     public GameObject grappleOriginUp;
+    public Rigidbody2D PlayerRB;
 
+    private GameObject target;
     private GameObject grappleOrigin;
     private Vector2 grappleDirection;
     private Vector2 targetPosition;
@@ -17,7 +19,7 @@ public class Grapple : MonoBehaviour
     //private bool isGrappling = false;
 
     public float grappleRange = 10f;
-    public float grappleSpeed = 5f;
+    public float grappleSpeed = 15f;
 
     private void Update()
     {
@@ -34,17 +36,34 @@ public class Grapple : MonoBehaviour
             // Draw the ray as a debug line
             Debug.DrawRay(grappleOrigin.transform.position, grappleDirection * grappleRange, Color.green);
 
-            if ((hitUp.collider.gameObject.tag == "Wall" || hitUp.collider.gameObject.tag == "Enemy")
-            && Input.GetKey(KeyCode.Q))
+            if (hitUp == false)
             {
-                //grappleDirectionCheck = GetGrappleDirectionCheck(targetPosition, transform.position);
-                targetWidthOrHeight = GetTargetWidthOrHeight(hitUp.collider.gameObject, 0);
-                targetPosition = GetTargetPosition(transform.position.x, hitUp.collider.gameObject.transform.position.y, targetWidthOrHeight);
-                GrapplePull(transform.position, targetPosition);
+                target = null;
+            }
+            else
+            {
+                target = hitUp.collider.gameObject;
+
+                if (target.CompareTag("Wall") || target.CompareTag("Enemy"))
+                {
+                    if (Input.GetKey(KeyCode.Q))
+                    {
+                        PlayerRB.gravityScale = -grappleSpeed;
+                        //grappleDirectionCheck = GetGrappleDirectionCheck(targetPosition, transform.position);
+                        targetWidthOrHeight = GetTargetWidthOrHeight(hitUp.collider.gameObject, 0);
+                        targetPosition = GetTargetPosition(transform.position.x, hitUp.collider.gameObject.transform.position.y, targetWidthOrHeight);
+                        GrapplePull(transform.position, targetPosition);
+                    }
+                    if (Input.GetKeyUp(KeyCode.Q))
+                    {
+                        PlayerRB.gravityScale = 5f;
+                    }
+                }
             }
         }
         else 
         {
+            PlayerRB.gravityScale = 5f;
             grappleOrigin = grappleOriginLnR;
             grappleDirection = new Vector2(grappleOrigin.transform.position.x - transform.position.x, 0f);
 
@@ -54,16 +73,26 @@ public class Grapple : MonoBehaviour
             // Draw the ray as a debug line
             Debug.DrawRay(grappleOrigin.transform.position, grappleDirection * grappleRange, Color.green);
 
-            if ((hit.collider.gameObject.tag == "Wall" || hit.collider.gameObject.tag == "Enemy")
-            && Input.GetKey(KeyCode.Q))
+            if (hit == false) 
             {
-                grappleDirectionCheck = GetGrappleDirectionCheck(targetPosition, transform.position);
-                targetWidthOrHeight = GetTargetWidthOrHeight(hit.collider.gameObject, grappleDirectionCheck);
-                targetPosition = GetTargetPosition(hit.collider.gameObject.transform.position.x, transform.position.y, targetWidthOrHeight);
-                GrapplePull(transform.position, targetPosition);
+                target = null;
+            }
+            else
+            {
+                target = hit.collider.gameObject;
+
+                if (target.CompareTag("Wall") || target.CompareTag("Enemy"))
+                {
+                    if (Input.GetKey(KeyCode.Q))
+                    {
+                        grappleDirectionCheck = GetGrappleDirectionCheck(targetPosition, transform.position);
+                        targetWidthOrHeight = GetTargetWidthOrHeight(target, grappleDirectionCheck);
+                        targetPosition = GetTargetPosition(target.transform.position.x, transform.position.y, targetWidthOrHeight);
+                        GrapplePull(transform.position, targetPosition);
+                    }
+                }
             }
         }
-        
     }
     public void GetGrappleTarget(RaycastHit2D hit) 
     {
@@ -91,7 +120,7 @@ public class Grapple : MonoBehaviour
             if (playerDirection !=0)
             {
                 // Get the width (x-axis size) of the object
-                float objectWidth = objectRenderer.bounds.size.x;
+                float objectWidth = objectRenderer.bounds.size.x / 2;
 
                 if (grappleDirectionCheck > 0)
                 {
@@ -102,7 +131,7 @@ public class Grapple : MonoBehaviour
             }
             else
             {
-                float objectHeight = objectRenderer.bounds.size.y;
+                float objectHeight = objectRenderer.bounds.size.y / 2;
                 objectHeight = -objectHeight;
                 return new Vector2(0, objectHeight);
             }
@@ -116,12 +145,13 @@ public class Grapple : MonoBehaviour
 
     public float GetGrappleDirectionCheck(Vector2 target, Vector2 currentPosition) 
     {
-        float directionCheck = targetPosition.x - currentPosition.x;
+        float directionCheck = target.x - currentPosition.x;
         return directionCheck;
     }
 
     public void GrapplePull(Vector2 cPosition, Vector2 tPosition) 
     {
+        /*
         if (cPosition == null || tPosition == null)
         {
 
@@ -132,6 +162,21 @@ public class Grapple : MonoBehaviour
             float step = grappleSpeed * Time.deltaTime;
 
             transform.position = Vector2.Lerp(cPosition, tPosition, Mathf.Clamp01(step / distanceToTarget));
+        }
+        */
+
+        float distanceToTarget = Vector2.Distance(cPosition, tPosition);
+
+        // Calculate the step based on the grappleSpeed
+        float step = grappleSpeed * Time.deltaTime;
+
+        // Make sure step is never greater than 1 to prevent overshooting
+        step = Mathf.Clamp01(step / distanceToTarget);
+
+        // Lerp only if the distance to the target is greater than a small threshold
+        if (distanceToTarget > 0.1f)
+        {
+            transform.position = Vector2.Lerp(cPosition, tPosition, step);
         }
 
         /*

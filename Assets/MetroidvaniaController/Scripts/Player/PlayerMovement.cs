@@ -17,11 +17,6 @@ public class PlayerMovement : MonoBehaviour
     public bool isGrounded;
     public bool canDoubleJump;
 
-    //bool dashAxis = false;
-    private void Start()
-    {
-        
-    }
     // Update is called once per frame
     void Update()
     {
