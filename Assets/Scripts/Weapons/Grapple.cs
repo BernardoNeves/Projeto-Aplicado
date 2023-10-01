@@ -15,15 +15,25 @@ public class Grapple : MonoBehaviour
     private Vector2 targetPosition;
     private Vector2 targetWidthOrHeight;
     private float grappleDirectionCheck;
+    private bool canGrapple = true;
+    private bool doGrapple = false;
     //private Vector2 grapplePoint;
     //private bool isGrappling = false;
 
     public float grappleRange = 10f;
     public float grappleSpeed = 15f;
+    public float grappleCoolDown = 1f;
+    public float grappleTimer = 1f;
+    public float grappleHoldTimer = 1f;
+    public float grappleSideForce = 1000f;
 
     private void Update()
     {
         // Find the direction the player is facing to throw the grapple
+
+        GrappleTimeCounter();
+
+        Debug.Log(grappleTimer);
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -46,18 +56,20 @@ public class Grapple : MonoBehaviour
 
                 if (target.CompareTag("Wall") || target.CompareTag("Enemy"))
                 {
-                    if (Input.GetKey(KeyCode.Q))
+                    if (Input.GetKey(KeyCode.Q) && canGrapple)
                     {
                         PlayerRB.gravityScale = -grappleSpeed;
                         //grappleDirectionCheck = GetGrappleDirectionCheck(targetPosition, transform.position);
                         targetWidthOrHeight = GetTargetWidthOrHeight(hitUp.collider.gameObject, 0);
                         targetPosition = GetTargetPosition(transform.position.x, hitUp.collider.gameObject.transform.position.y, targetWidthOrHeight);
                         GrapplePull(transform.position, targetPosition);
+                        grappleTimer = 0f;
                     }
                     if (Input.GetKeyUp(KeyCode.Q))
                     {
                         PlayerRB.gravityScale = 5f;
                     }
+
                 }
             }
         }
@@ -83,17 +95,69 @@ public class Grapple : MonoBehaviour
 
                 if (target.CompareTag("Wall") || target.CompareTag("Enemy"))
                 {
-                    if (Input.GetKey(KeyCode.Q))
+                    if (Input.GetKey(KeyCode.Q) && canGrapple)
                     {
+                        /*
+                        if (canGrapple && !doGrapple)
+                        {
+                            StartCoroutine(GrappleHoldTimer());
+                        }
+                        StartCoroutine(GrappleTimeCounter());
+                        if (doGrapple)
+                        {
+                            grappleDirectionCheck = GetGrappleDirectionCheck(targetPosition, transform.position);
+                            targetWidthOrHeight = GetTargetWidthOrHeight(target, grappleDirectionCheck);
+                            targetPosition = GetTargetPosition(target.transform.position.x, transform.position.y, targetWidthOrHeight);
+                            GrapplePull(transform.position, targetPosition);
+                        }
+                        */
+                        
                         grappleDirectionCheck = GetGrappleDirectionCheck(targetPosition, transform.position);
                         targetWidthOrHeight = GetTargetWidthOrHeight(target, grappleDirectionCheck);
                         targetPosition = GetTargetPosition(target.transform.position.x, transform.position.y, targetWidthOrHeight);
                         GrapplePull(transform.position, targetPosition);
+
+                        PlayerRB.AddForce(new Vector2(targetPosition.x - transform.position.x, targetPosition.y - transform.position.y) * grappleSideForce);
+
+                        grappleTimer = 0f;
                     }
                 }
             }
         }
     }
+
+    /*
+    private IEnumerator GrappleTimeCounter()
+    {
+        canGrapple = false;
+        yield return new WaitForSeconds(3);
+        canGrapple = true;
+    }
+
+    private IEnumerator GrappleHoldTimer()
+    {
+        doGrapple = true;
+        yield return new WaitForSeconds(5);
+        doGrapple = false;
+    }
+    */
+
+
+    public void GrappleTimeCounter() 
+    {
+        if (grappleTimer < grappleCoolDown)
+        {
+            grappleTimer += Time.deltaTime;
+            canGrapple = false;
+        }
+        if (grappleTimer >= grappleCoolDown)
+        {
+            canGrapple = true;
+        }
+    }
+    
+
+
     public void GetGrappleTarget(RaycastHit2D hit) 
     {
         if ((hit.collider.gameObject.tag == "Wall" || hit.collider.gameObject.tag == "Enemy")
