@@ -26,10 +26,13 @@ public class Grapple : MonoBehaviour
     public float grappleTimer = 1f;
     public float grappleHoldTimer = 1f;
     public float grappleSideForce = 1000f;
+    public float grappleSideForceMultiplier = 150f;
 
     private void Update()
     {
         // Find the direction the player is facing to throw the grapple
+
+        grappleSideForce = grappleRange * grappleSideForceMultiplier;
 
         GrappleTimeCounter();
 
@@ -42,9 +45,6 @@ public class Grapple : MonoBehaviour
 
             // Perform the raycast and store the result in a RaycastHit2D object
             RaycastHit2D hitUp = Physics2D.Raycast(grappleOrigin.transform.position, grappleDirection, grappleRange);
-
-            // Draw the ray as a debug line
-            Debug.DrawRay(grappleOrigin.transform.position, grappleDirection * grappleRange, Color.green);
 
             if (hitUp == false)
             {
@@ -59,7 +59,6 @@ public class Grapple : MonoBehaviour
                     if (Input.GetKey(KeyCode.Q) && canGrapple)
                     {
                         PlayerRB.gravityScale = -grappleSpeed;
-                        //grappleDirectionCheck = GetGrappleDirectionCheck(targetPosition, transform.position);
                         targetWidthOrHeight = GetTargetWidthOrHeight(hitUp.collider.gameObject, 0);
                         targetPosition = GetTargetPosition(transform.position.x, hitUp.collider.gameObject.transform.position.y, targetWidthOrHeight);
                         GrapplePull(transform.position, targetPosition);
@@ -75,15 +74,12 @@ public class Grapple : MonoBehaviour
         }
         else 
         {
-            PlayerRB.gravityScale = 5f;
+            //PlayerRB.gravityScale = 5f;
             grappleOrigin = grappleOriginLnR;
             grappleDirection = new Vector2(grappleOrigin.transform.position.x - transform.position.x, 0f);
 
             // Perform the raycast and store the result in a RaycastHit2D object
             RaycastHit2D hit = Physics2D.Raycast(grappleOrigin.transform.position, grappleDirection, grappleRange);
-
-            // Draw the ray as a debug line
-            Debug.DrawRay(grappleOrigin.transform.position, grappleDirection * grappleRange, Color.green);
 
             if (hit == false) 
             {
@@ -97,21 +93,7 @@ public class Grapple : MonoBehaviour
                 {
                     if (Input.GetKey(KeyCode.Q) && canGrapple)
                     {
-                        /*
-                        if (canGrapple && !doGrapple)
-                        {
-                            StartCoroutine(GrappleHoldTimer());
-                        }
-                        StartCoroutine(GrappleTimeCounter());
-                        if (doGrapple)
-                        {
-                            grappleDirectionCheck = GetGrappleDirectionCheck(targetPosition, transform.position);
-                            targetWidthOrHeight = GetTargetWidthOrHeight(target, grappleDirectionCheck);
-                            targetPosition = GetTargetPosition(target.transform.position.x, transform.position.y, targetWidthOrHeight);
-                            GrapplePull(transform.position, targetPosition);
-                        }
-                        */
-                        
+                        PlayerRB.velocity = Vector2.zero;
                         grappleDirectionCheck = GetGrappleDirectionCheck(targetPosition, transform.position);
                         targetWidthOrHeight = GetTargetWidthOrHeight(target, grappleDirectionCheck);
                         targetPosition = GetTargetPosition(target.transform.position.x, transform.position.y, targetWidthOrHeight);
@@ -126,23 +108,6 @@ public class Grapple : MonoBehaviour
         }
     }
 
-    /*
-    private IEnumerator GrappleTimeCounter()
-    {
-        canGrapple = false;
-        yield return new WaitForSeconds(3);
-        canGrapple = true;
-    }
-
-    private IEnumerator GrappleHoldTimer()
-    {
-        doGrapple = true;
-        yield return new WaitForSeconds(5);
-        doGrapple = false;
-    }
-    */
-
-
     public void GrappleTimeCounter() 
     {
         if (grappleTimer < grappleCoolDown)
@@ -156,8 +121,6 @@ public class Grapple : MonoBehaviour
         }
     }
     
-
-
     public void GetGrappleTarget(RaycastHit2D hit) 
     {
         if ((hit.collider.gameObject.tag == "Wall" || hit.collider.gameObject.tag == "Enemy")
@@ -215,20 +178,6 @@ public class Grapple : MonoBehaviour
 
     public void GrapplePull(Vector2 cPosition, Vector2 tPosition) 
     {
-        /*
-        if (cPosition == null || tPosition == null)
-        {
-
-        }
-        else
-        {
-            float distanceToTarget = Vector2.Distance(cPosition, tPosition);
-            float step = grappleSpeed * Time.deltaTime;
-
-            transform.position = Vector2.Lerp(cPosition, tPosition, Mathf.Clamp01(step / distanceToTarget));
-        }
-        */
-
         float distanceToTarget = Vector2.Distance(cPosition, tPosition);
 
         // Calculate the step based on the grappleSpeed
@@ -242,29 +191,5 @@ public class Grapple : MonoBehaviour
         {
             transform.position = Vector2.Lerp(cPosition, tPosition, step);
         }
-
-        /*
-        isGrappling = true;
-        grapplePoint = hit.point;
-
-        if (isGrappling)
-        {
-            Vector2 targetPosition = grapplePoint;
-            Vector2 currentPosition = transform.position;
-            float distanceToTarget = Vector2.Distance(currentPosition, targetPosition);
-
-            if (Input.GetKey(KeyCode.Q))
-            {
-                // Continue to stick to the wall
-                float step = grappleSpeed * Time.deltaTime;
-                transform.position = Vector2.Lerp(currentPosition, targetPosition, Mathf.Clamp01(step / distanceToTarget));
-            }
-            else
-            {
-                // Release the grapple
-                isGrappling = false;
-            }
-        }
-        */
     }
 }
