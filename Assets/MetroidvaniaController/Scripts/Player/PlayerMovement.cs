@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public float runSpeed = 40f;
 
     float horizontalMove = 0f;
-    bool jump = false;
+    public bool jump = false;
     bool dash = false;
     public bool isAttacking;
     public bool isGrounded;

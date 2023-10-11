@@ -17,6 +17,7 @@ public class Grapple : MonoBehaviour
     private float grappleDirectionCheck;
     private bool canGrapple = true;
     private bool doGrapple = false;
+    private bool isWallSliding = false;
     //private Vector2 grapplePoint;
     //private bool isGrappling = false;
 
@@ -25,18 +26,18 @@ public class Grapple : MonoBehaviour
     public float grappleCoolDown = 1f;
     public float grappleTimer = 1f;
     public float grappleHoldTimer = 1f;
-    public float grappleSideForce = 1000f;
+    private float grappleSideForce = 1000f;
     public float grappleSideForceMultiplier = 150f;
 
     private void Update()
     {
         // Find the direction the player is facing to throw the grapple
 
+        isWallSliding = GetComponent<CharacterController2D>().isWallSliding;
+
         grappleSideForce = grappleRange * grappleSideForceMultiplier;
 
         GrappleTimeCounter();
-
-        Debug.Log(grappleTimer);
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -64,17 +65,17 @@ public class Grapple : MonoBehaviour
                         GrapplePull(transform.position, targetPosition);
                         grappleTimer = 0f;
                     }
-                    if (Input.GetKeyUp(KeyCode.Q))
+                    if (Input.GetKeyUp(KeyCode.Q) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
                     {
                         PlayerRB.gravityScale = 5f;
+                        grappleTimer = 0f;
                     }
-
                 }
             }
         }
         else 
         {
-            //PlayerRB.gravityScale = 5f;
+            PlayerRB.gravityScale = 5f;
             grappleOrigin = grappleOriginLnR;
             grappleDirection = new Vector2(grappleOrigin.transform.position.x - transform.position.x, 0f);
 
@@ -91,7 +92,7 @@ public class Grapple : MonoBehaviour
 
                 if (target.CompareTag("Wall") || target.CompareTag("Enemy"))
                 {
-                    if (Input.GetKey(KeyCode.Q) && canGrapple)
+                    if (Input.GetKey(KeyCode.Q) && canGrapple && !isWallSliding)
                     {
                         PlayerRB.velocity = Vector2.zero;
                         grappleDirectionCheck = GetGrappleDirectionCheck(targetPosition, transform.position);
