@@ -11,5 +11,20 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scripts/Scenes/Prototipe.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scripts/Scenes/Village/Village1.unity
+    guid: b530409c7587e2b4ea5cb257faa0ff60
+  - enabled: 1
+    path: Assets/Scripts/Scenes/Village/Village2.unity
+    guid: 6ccc677724d7698479e7ec960767d417
+  - enabled: 1
+    path: Assets/Scripts/Scenes/Village/Village3.unity
+    guid: bc9336f5c0e3c484ab938165157f68a4
+  - enabled: 1
+    path: Assets/Scripts/Scenes/Village/Village4.unity
+    guid: adb192a5f926ca444bdc726c08dcc512
+  - enabled: 1
+    path: Assets/Scripts/Scenes/Village/Village5.unity
+    guid: 463e8a08389834b49b1ab41cab9676a6
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: c9e37d5560afa784ea5fbbcb51eccba9, type: 2}

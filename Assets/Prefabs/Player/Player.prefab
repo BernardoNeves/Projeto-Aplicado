@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 783f8b7882d2d2a42a5b76de9179978f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Rigidbody2D: {fileID: 0}
+  rigidBody: {fileID: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -226,6 +226,12 @@ MonoBehaviour:
   dashForce: 50
   dashTimeout: 0.4
   canDash: 0
+  canGrapple: 0
+  grappleRange: 10
+  grappleSpeed: 25
+  grappleDeadzone: 0.25
+  grappleCooldown: 3
+  grappleTimeout: 0.3
 --- !u!114 &9100829682654699188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,6 +250,7 @@ MonoBehaviour:
   primaryAttack: 0
   secondaryAttack: 0
   dash: 0
+  grapple: 0
   pause: 0
   analogMovement: 0
   cursorLocked: 1

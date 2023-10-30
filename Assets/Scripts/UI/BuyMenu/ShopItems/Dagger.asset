@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51dd022a5d9ecf5458c00e227daa8c65, type: 3}
+  m_Name: Dagger
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
+  materials:
+  - name: Stone
+    quantity: 3
+  - name: Wood
+    quantity: 1
+  isAffordable: 0
+  attackRadius: 0
+  primaryAttackDamage: 0
+  primaryAttackTimeout: 0
+  primaryAttackSpeed: 0
+  secondaryAttackDamage: 0
+  secondaryAttackTimeout: 0
+  secondaryAttackSpeed: 0
