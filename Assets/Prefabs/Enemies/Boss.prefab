@@ -64,7 +64,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _value: 100
   <MaxValue>k__BackingField: 100
-  isTimeCoroutineRunning: 1
+  isTimeCoroutineRunning: 0
   multiplyer: 1
 --- !u!114 &844595145823572906
 MonoBehaviour:
