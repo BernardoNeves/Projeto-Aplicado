@@ -252,7 +252,7 @@ MonoBehaviour:
   shakeDuration: 0
   shakeAmount: 0.1
   decreaseFactor: 1
-  shouldFollow: 0
+  shouldFollow: 1
   firstSceneName: FirstLevel
 --- !u!81 &839546620
 AudioListener:
