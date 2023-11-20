@@ -253,7 +253,7 @@ MonoBehaviour:
   seePlayer: 0
   circleSegments: 30
   attackColor: {r: 1, g: 0, b: 0, a: 1}
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 4086153336039082356}
   checkGround: {fileID: 2899239478522951726}
   groundLayer:
     serializedVersion: 2

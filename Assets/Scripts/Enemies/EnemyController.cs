@@ -38,6 +38,7 @@ public abstract class EnemyController : MonoBehaviour
         timeManager.MaxValue = Random.Range(15, 61);
         timeManager.Value = timeManager.MaxValue;
         originalColor = spriteRenderer.color;
+        timeManager.OnDeathAction += Death; 
     }
 
     public virtual void Patrol()
@@ -120,5 +121,10 @@ public abstract class EnemyController : MonoBehaviour
 
         // Restore the original color, including alpha
         spriteRenderer.color = startColor;
+    }
+
+    void Death()
+    {
+        Destroy(gameObject);
     }
 }

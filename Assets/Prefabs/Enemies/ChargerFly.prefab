@@ -134,7 +134,7 @@ MonoBehaviour:
   seePlayer: 0
   circleSegments: 30
   attackColor: {r: 1, g: 0, b: 0, a: 1}
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 321933501911111827}
   chargingTime: 1
 --- !u!114 &4615186692117375596
 MonoBehaviour:

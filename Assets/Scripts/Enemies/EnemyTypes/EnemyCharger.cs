@@ -73,4 +73,6 @@ public class EnemyCharger : EnemyController
         moveSpeed = -moveSpeed;
     }
 
+   
+
 }
