@@ -31,8 +31,8 @@ Transform:
   m_GameObject: {fileID: 315928538332244304}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15.011045, y: -1.3095527, z: 0.12439172}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 15.1177, y: 0.1365, z: 0}
+  m_LocalScale: {x: 1.1635, y: 1.1635, z: 1.1635}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6197774549125877008}
@@ -92,6 +92,12 @@ MonoBehaviour:
   viewRange: 0
   _isHeavy: 0
   seePlayer: 0
+<<<<<<< Updated upstream
+=======
+  circleSegments: 30
+  attackColor: {r: 1, g: 0, b: 0, a: 1}
+  spriteRenderer: {fileID: 4095283726963311809}
+>>>>>>> Stashed changes
   checkGround: {fileID: 4903613151392779999}
   groundLayer:
     serializedVersion: 2
@@ -159,7 +165,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1.44, y: 1.67}
     newSize: {x: 1, y: 0.8828125}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -209,8 +215,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0, g: 0.28873968, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: dec06e99aca9d824a9711bfe36fb74ae, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -220,6 +226,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+<<<<<<< Updated upstream
+=======
+--- !u!114 &7245501781095269886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 315928538332244304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d97866fd3ae99464490de1ca5d47a299, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  center: {fileID: 5317686022889561220}
+  attackRange: 22
+  circleSegments: 30
+>>>>>>> Stashed changes
 --- !u!1 &3788812773980616519
 GameObject:
   m_ObjectHideFlags: 0

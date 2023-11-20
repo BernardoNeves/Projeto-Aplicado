@@ -152,6 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _value: 60
   <MaxValue>k__BackingField: 60
+  isTimeCoroutineRunning: 0
   multiplyer: 1
 --- !u!114 &8906644349437976051
 MonoBehaviour:
@@ -232,6 +233,7 @@ MonoBehaviour:
   grappleDeadzone: 0.25
   grappleCooldown: 3
   grappleTimeout: 0.3
+  interactDistance: 2
 --- !u!114 &9100829682654699188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,6 +254,7 @@ MonoBehaviour:
   dash: 0
   grapple: 0
   pause: 0
+  interact: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1

@@ -1012,10 +1012,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bottomRooms:
   - {fileID: 1303716229055801969, guid: 4cec5e20f2e00f9448116681ddcf5ac2, type: 3}
-  - {fileID: 5143666042061378376, guid: f004cfdce0cb6894b8efa278c4cd7b7c, type: 3}
+  - {fileID: 3384882122288926609, guid: f004cfdce0cb6894b8efa278c4cd7b7c, type: 3}
   topRooms:
   - {fileID: 348175486421180071, guid: 34bd914ccf0f76e4aa500ad005322398, type: 3}
-  - {fileID: 1213656901074452669, guid: 8a5c0c346ae69cd4f8f03dd74cdfab12, type: 3}
+  - {fileID: 8362082029825163369, guid: 8a5c0c346ae69cd4f8f03dd74cdfab12, type: 3}
   - {fileID: 4692061502591524533, guid: 629881c1f974e7d499785d906c8b1264, type: 3}
   leftRooms:
   - {fileID: 6190416978077968046, guid: e05294b78ba513447a514d1fc2e74dc7, type: 3}
@@ -1023,13 +1023,13 @@ MonoBehaviour:
   - {fileID: 6684280000671497132, guid: bdb61dbc51372cc4a9a6043847d240cc, type: 3}
   - {fileID: 1395061433843635851, guid: 060cda57338f0f64882b318b32c38a4a, type: 3}
   rightRooms:
-  - {fileID: 5143666042061378376, guid: f004cfdce0cb6894b8efa278c4cd7b7c, type: 3}
+  - {fileID: 3384882122288926609, guid: f004cfdce0cb6894b8efa278c4cd7b7c, type: 3}
   - {fileID: 5473032983201066519, guid: 5fa70afa99bf0144d8f15ca358fd29fe, type: 3}
   - {fileID: 2530794664676201887, guid: b4055b3ea7651cc47911a6cdccec716a, type: 3}
   - {fileID: 900699874560134400, guid: 0bd202e5df96571458e24a3664c46a68, type: 3}
   rooms:
   - {fileID: 0}
-  waitTime: 5
+  waitTime: 10
   boss: {fileID: 4794978537490621, guid: 1ba56d200a634534b8d615225cb48001, type: 3}
 --- !u!1 &420992043
 GameObject:

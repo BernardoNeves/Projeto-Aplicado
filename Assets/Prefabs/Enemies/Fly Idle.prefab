@@ -341,6 +341,12 @@ MonoBehaviour:
   viewRange: 5
   _isHeavy: 0
   seePlayer: 0
+<<<<<<< Updated upstream
+=======
+  circleSegments: 30
+  attackColor: {r: 1, g: 0, b: 0, a: 1}
+  spriteRenderer: {fileID: 5545833759494704788}
+>>>>>>> Stashed changes
 --- !u!212 &5545833759494704788
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -382,8 +388,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 2747690628134850419, guid: b670ab75dde984907b8570040daa08c5, type: 3}
-  m_Color: {r: 1, g: 0.45313016, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: a1fa4dd8a9a1b4042b6238fa8bf8fcb8, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -456,7 +462,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.8828125}
+    oldSize: {x: 2.14, y: 1.6}
     newSize: {x: 1, y: 0.8828125}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -465,3 +471,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+<<<<<<< Updated upstream
+=======
+--- !u!114 &275980027326612886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8180101717211730988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d97866fd3ae99464490de1ca5d47a299, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  center: {fileID: 1089752659047737486}
+  attackRange: 22
+  circleSegments: 30
+>>>>>>> Stashed changes

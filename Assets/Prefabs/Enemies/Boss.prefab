@@ -257,6 +257,24 @@ MonoBehaviour:
   spawnInterval: 3
   smallFly: {fileID: 4026344006374216760, guid: e7e25a89ec73fb04c88e72473464a0ed, type: 3}
   spawnLocation: {fileID: 9056343406496506255}
+<<<<<<< Updated upstream
+=======
+--- !u!114 &4541930781355586572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4794978537490621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d97866fd3ae99464490de1ca5d47a299, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  center: {fileID: 6981726966359332442}
+  attackRange: 22
+  circleSegments: 30
+>>>>>>> Stashed changes
 --- !u!1 &67925642905522793
 GameObject:
   m_ObjectHideFlags: 0
