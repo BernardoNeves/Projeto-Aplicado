@@ -48,6 +48,7 @@ public class PathFinding {
             foreach (PathNode neighbourNode in GetNeighbourList(currentNode)) {
                 if (closedList.Contains(neighbourNode)) continue;
 
+                /*
                 int tentativeGCost = currentNode.gCost + CalculateDistance(currentNode, neighbourNode);
                 if (tentativeGCost < neighbourNode.gCost) {
                     neighbourNode.cameFromNode = currentNode;
@@ -59,6 +60,7 @@ public class PathFinding {
                         openList.Add(neighbourNode);
                     }
                 }
+                */
             }
         }
 
